@@ -1,5 +1,6 @@
 const { Schema, Types } = require('mongoose');
 
+// Set schema for Reaction model
 const reactionSchema = new Schema({
     // set custom id to avoid confusion with parent comment _id
     reactionId: {
