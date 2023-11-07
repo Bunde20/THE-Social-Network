@@ -68,6 +68,27 @@ router.put('/:id', (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
+// POST to create a reaction stored in a single thought's reactions array field
+router.post('/:id/reactions', (req, res) => {
+    Thought.findOneAndUpdate(
+        { _id: req.params.id },
+        { $push: { reactions: req.body } },
+        { runValidators: true, new: true }
+    )
+    .then(dbThoughtData => {
+        // If no thought is found, send 404
+        if (!dbThoughtData) {
+            res.status(404).json({ message: 'No thought found with this id!' });
+            return;
+        }
+        res.json(dbThoughtData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err)}
+    );
+});
+
 // DELETE to remove a thought by its _id
 router.delete('/:id', (req, res) => {
     Thought.findOneAndDelete({ _id: req.params.id })
@@ -87,6 +108,27 @@ router.delete('/:id', (req, res) => {
         res.json({ message: 'Thought and associated user deleted!' });
     })
     .catch(err => res.status(400).json(err));
+});
+
+// DELETE a reaction by the reaction id
+router.delete('/:id/reactions/:reactionId', (req, res) => {
+    Thought.findOneAndUpdate(
+        { _id: req.params.id },
+        { $pull: { reactions: {reactionId: req.params.reactionId} } },
+        { runValidators: true, new: true }
+    )
+    .then(dbThoughtData => {
+        // If no thought is found, send 404
+        if (!dbThoughtData) {
+            res.status(404).json({ message: 'No reaction found with this id!' });
+            return;
+        }
+        res.json(dbThoughtData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err)}
+    );
 });
 
 module.exports = router;

@@ -1,9 +1,19 @@
 const router = require('express').Router();
 const User = require('../../models/User');
+const Thought = require('../../models/Thought');
 
-// GET all users
-router.get('/', (req, res) => { 
+// GET all users and populate thoughts and friends
+router.get('/', (req, res) => {
     User.find({})
+    .populate({
+        path: 'thoughts',
+        select: '-__v'
+    })
+    .populate({
+        path: 'friends',
+        select: '-__v'
+    })
+    .sort({ _id: -1 })
     .then(dbUserData => res.json(dbUserData))
     .catch(err => {
         console.log(err);
@@ -83,7 +93,8 @@ router.delete('/:id', (req, res) => {
         // Remove the user from any friend arrays
         User.updateMany(
             { friends: req.params.id },
-            { $pull: { friends: req.params.id } }
+            { $pull: { friends: req.params.id } },
+            { new: true }
         )
         .then(() => {
             // Delete any thoughts associated with the user
@@ -91,11 +102,20 @@ router.delete('/:id', (req, res) => {
             .then(() => {
                 res.json({ message: 'Successfully deleted user!' });
             })
-            .catch(err => res.status(400).json(err));
+            .catch(err => {
+                console.log(err)
+                res.status(400).json(err)} 
+                );
         })
-        .catch(err => res.status(400).json(err));
+        .catch(err => {
+            console.log(err)
+            res.status(400).json(err)} 
+            );
     })
-    .catch(err => res.status(400).json(err));
+    .catch(err => {
+        console.log(err)
+        res.status(400).json(err)} 
+        );
 });
 
 // DELETE one friend from a user's friend list
