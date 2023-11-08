@@ -140,7 +140,7 @@ router.delete('/:userId/friends/:friendId', (req, res) => {
             // Delete any thoughts associated with the user
             Thought.deleteMany({ username: dbUserData.username })
             .then(() => {
-                res.json({ message: 'Successfully deleted user!' });
+                res.json({ message: 'Successfully deleted friend!' });
             })
             .catch(err => res.status(400).json(err));
         })
