@@ -18,17 +18,13 @@ As a new tech start-up, the client would like to have an application that can ma
 To install this application, download this repository to a local directory and run "npm install" in the terminal to install the required dependencies.
 
 ## Usage
+![THE-Social-Network-GIF](https://github.com/Bunde20/THE-Social-Network/assets/135177057/dec1ee4a-ea23-4a8c-8c16-cffff65fdf58)
 
 
 
 
 
-- Follow the link to view a longer video showing the dynamic application functionality:
-
-
-
-
-
+- Follow the link to view a longer video showing the dynamic application functionality: [THE-Social-Network.webm](https://github.com/Bunde20/THE-Social-Network/assets/135177057/9a00e099-ab83-41e0-8b8e-a28e6eeecbc0)
 
 ## License
 This application falls under the [MIT](https://choosealicense.com/licenses/mit/) license.
